@@ -1,43 +1,37 @@
-# 🚀 Commvault External Exposure & Analytics Automation
+# 📊 Commvault Observability & Centralized Analytics
 
-This project automates the secure exposure of a Commvault CommServe environment on Google Cloud Platform (GCP). It uses a hybrid approach with **Terraform** for infrastructure and **Ansible** for guest-level configuration.
+This project automates the collection of backup metadata from Commvault environments and transforms it into actionable executive dashboards on Google Cloud Platform (GCP).
 
 ## 🎯 Project Vision
-The primary goal is to transform Commvault from a "closed" backup tool into a **Data Source**. By exposing the Commvault REST API through a secure Load Balancer, we enable:
-1.  **Automated Data Extraction:** Seamlessly pulling metadata via API.
-2.  **Advanced Analytics:** Feeding data into **Google Looker** for executive dashboards.
-3.  **Simplified Reporting:** Providing clients with high-level backup insights (Success rates, storage growth, compliance) without requiring technical expertise or direct access to the CommCell.
+The objective is to bridge the gap between complex backup operations and high-level business validation. By decoupling data from the CommServe, we provide:
+1.  **Centralized Visibility:** A single source of truth for hybrid backup environments.
+2.  **Technical Decoupling:** Stakeholders can validate backup health (Success/Failure rates) without direct access to the CommServe or technical training.
+3.  **Governance & Compliance:** Historical tracking of job statuses for audit and health monitoring.
 
 ---
 
 ## 🏗️ Architecture Components
 
 ### 1. Infrastructure (Terraform)
-* **Global HTTPS Load Balancer:** Handles incoming traffic with high availability.
-* **Google-Managed SSL Certificate:** Provides automated encryption for the chosen domain.
-* **Cloud Firewall Rules:** Specific rules for Google Health Checks and internal communication.
-* **Unmanaged Instance Group:** Maps your existing CommServe VM to the Load Balancer backend.
+* **Google Cloud SQL (MySQL):** Managed database instance to store historical backup metadata.
+* **IAM & Security:** Service accounts and roles for secure API interaction and database access.
+* **Networking:** Cloud Firewall configuration for secure communication between the collector and the database.
 
-### 2. Configuration (Ansible)
-* **Tomcat Tuning:** Configures the Commvault Apache instance for secure proxying.
-* **Registry Automation:** Automatically sets "Additional Settings" (CommandCenterURL, WebConsoleURL, ShowCommandCenterIcon).
-* **Service Management:** Ensures the Web Console services are correctly restarted and healthy.
+### 2. Configuration & Automation (Ansible)
+* **Environment Setup:** Automates Python environment preparation and library dependencies (`pymysql`, `requests`).
+* **Collector Deployment:** Provisions the data extraction script and manages environment variables.
+
+### 3. Data Pipeline (Python & API)
+* **REST API Integration:** Custom collector utilizing Long-Lived Access Tokens and Auto-Refresh logic.
+* **Service Account (Prisma):** Dedicated Commvault user for secure, non-interactive data extraction.
 
 ---
 
 ## 🛠️ Technology Stack
 * **IaC:** Terraform
-* **Configuration Management:** Ansible (targeting Windows/WinRM)
+* **Configuration Management:** Ansible
 * **Cloud:** Google Cloud Platform (GCP)
+* **Database:** Cloud SQL for MySQL
+* **Language:** Python 3.x
 * **API:** Commvault REST API
-* **Visualization:** Google Looker / Looker Studio
-
----
-
-## 🚀 Deployment Workflow
-
-### 1. Provision Infrastructure
-Navigate to the `terraform/` directory, update your `terraform.tfvars`, and run:
-```bash
-terraform init
-terraform apply
+* **Visualization:** Google Looker Studio

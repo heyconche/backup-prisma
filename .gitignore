@@ -1,0 +1,50 @@
+# ==========================================
+# Terraform
+# ==========================================
+# Ignorar arquivos de estado local (contêm segredos e dados da infra)
+*.tfstate
+*.tfstate.backup
+*.tfstate.lock.info
+
+# Ignorar diretório de plugins e módulos
+.terraform/
+.terraform.lock.hcl
+
+# Ignorar arquivos de variáveis com dados sensíveis
+*.tfvars
+*.tfvars.json
+
+# ==========================================
+# Ansible
+# ==========================================
+# Ignorar arquivos de inventário com IPs e credenciais locais
+inventory.ini
+hosts.ini
+
+# Ignorar logs do Ansible e arquivos de retry
+*.retry
+ansible.log
+
+# Ignorar variáveis sensíveis (caso use Ansible Vault, ignore os arquivos cleartext)
+group_vars/all.yml.cleartext
+
+# ==========================================
+# GCP & Chaves de Acesso
+# ==========================================
+# Ignorar arquivos JSON de Service Accounts (NUNCA suba isso!)
+*.json
+!example.json # Se quiser manter um exemplo
+
+# ==========================================
+# Sistema e Editores
+# ==========================================
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.log
+dist/
+build/
+
+# Arquivos temporários de redirecionamento (como o redirect.yaml do gcloud)
+redirect.yaml
