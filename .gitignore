@@ -1,42 +1,42 @@
 # ==========================================
 # Terraform
 # ==========================================
-# Ignorar arquivos de estado local (contêm segredos e dados da infra)
+# Ignore local state files (contain secrets and infrastructure data)
 *.tfstate
 *.tfstate.backup
 *.tfstate.lock.info
 
-# Ignorar diretório de plugins e módulos
+# Ignore plugin and module directories
 .terraform/
 .terraform.lock.hcl
 
-# Ignorar arquivos de variáveis com dados sensíveis
+# Ignore variable files with sensitive data
 *.tfvars
 *.tfvars.json
 
 # ==========================================
 # Ansible
 # ==========================================
-# Ignorar arquivos de inventário com IPs e credenciais locais
+# Ignore inventory files with local IPs and credentials
 inventory.ini
 hosts.ini
 
-# Ignorar logs do Ansible e arquivos de retry
+# Ignore Ansible logs and retry files
 *.retry
 ansible.log
 
-# Ignorar variáveis sensíveis (caso use Ansible Vault, ignore os arquivos cleartext)
+# Ignore sensitive variables (if using Ansible Vault, ignore cleartext files)
 group_vars/all.yml.cleartext
 
 # ==========================================
-# GCP & Chaves de Acesso
+# GCP & Access Keys
 # ==========================================
-# Ignorar arquivos JSON de Service Accounts (NUNCA suba isso!)
+# Ignore Service Account JSON files (NEVER commit these!)
 *.json
-!example.json # Se quiser manter um exemplo
+!example.json # Keep as example if needed
 
 # ==========================================
-# Sistema e Editores
+# System & Editors
 # ==========================================
 .DS_Store
 .idea/
@@ -46,5 +46,5 @@ group_vars/all.yml.cleartext
 dist/
 build/
 
-# Arquivos temporários de redirecionamento (como o redirect.yaml do gcloud)
+# Temporary redirection files (e.g., gcloud redirect.yaml)
 redirect.yaml
