@@ -1,0 +1,15 @@
+#Login google credentials (run on terminal)
+gcloud auth application-default login
+
+#Set correct project
+gcloud config set project sauter-prisma-hub
+
+#Be sure to create the bucket responsible for terraform backend
+gsutil mb -p sauter-prisma-hub -l us-central1 gs://sauter-prisma-hub-tfstate
+gsutil versioning set on gs://sauter-prisma-hub-tfstate
+
+#Review the terraform.tfvars file and be sure the project id and vpc names are correct
+
+######## AFTER TERRAFORM APPLY ########
+
+# Check the created secrets and add Commvault tokens inside of each one
