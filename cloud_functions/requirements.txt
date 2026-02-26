@@ -1,0 +1,11 @@
+# Library for making HTTP requests to Commvault API
+requests==2.31.0
+
+# Library for MySQL database connection
+PyMySQL==1.1.0
+
+# Google Cloud Secret Manager client library
+google-cloud-secret-manager==2.20.0
+
+# Cryptography support for secure database connections
+cryptography==42.0.0
