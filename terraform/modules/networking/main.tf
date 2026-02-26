@@ -14,6 +14,20 @@ resource "google_compute_subnetwork" "hub_subnet" {
   network       = google_compute_network.main_vpc.id
 }
 
+# Allows the Cloud Function/Collector to reach Commvault API ports
+resource "google_compute_firewall" "allow_commvault" {
+  name    = "fw-allow-commvault-api"
+  network = google_compute_network.main_vpc.name
+
+  allow {
+    protocol = "tcp"
+    ports    = ["443", "81", "8443"] # Standard Commvault API ports
+  }
+
+  # Only traffic originating from our internal subnet is allowed
+  source_ranges = ["10.0.0.0/24"]
+}
+
 # --- VPC PEERING (THE BRIDGE) ---
 # Create a peering connection for each client defined in your variables
 # This allows the GCP to "see" the client's CommServe internal IP

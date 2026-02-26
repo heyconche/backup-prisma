@@ -1,29 +1,28 @@
 # terraform/variables.tf
 
-# Project ID on Google Cloud
 variable "project_id" {
   type        = string
   description = "The GCP Project ID"
 }
 
-# Regional location for resources
 variable "region" {
   type    = string
   default = "us-central1"
 }
 
-# Map of client environments (The multi-tenant structure)
+# Enhanced map to support VPC Peering automation
 variable "commvault_environments" {
   type = map(object({
-    db_name      = string # Database name for isolation
-    db_user      = string # Database user for isolation
-    commserve_ip = string # Internal IP for VPC Peering/VPN access
+    db_name           = string # Isolated DB name
+    db_user           = string # Isolated DB user
+    commserve_ip      = string # Internal IP of the CommServe
+    client_project_id = string # GCP Project ID where the client's VPC is located
+    client_vpc_name   = string # Name of the client's VPC for peering
   }))
-  description = "List of clients to be provisioned"
+  description = "Multi-tenant configuration for Commvault environments"
 }
 
-# Master password for all database users
 variable "db_password" {
   type      = string
-  sensitive = true # Prevents the password from appearing in logs
+  sensitive = true
 }
